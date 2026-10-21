@@ -1,4 +1,4 @@
-﻿@import 'tailwindcss';
+@import 'tailwindcss';
 
 /*
  * Jumi tokens (from the pitch deck, refined for contrast).
@@ -143,3 +143,6 @@ body {
     transition-duration: 1ms !important;
   }
 }
+
+/* Short viewports (laptops on a projector): tighten cards so swipe buttons stay on screen. */
+@custom-variant short (@media (max-height: 760px));

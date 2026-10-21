@@ -13,13 +13,13 @@ const PALETTES: Record<Exclude<MarkVariant, 'mono'>, { a: string; b: string; ove
   onDark: { a: '#6fae27', b: '#fff32f', overlap: '#d6ff6e' },
   // Yellow vanishes on cream, so the light variant shifts to the deep greens.
   onLight: { a: '#4c7f1e', b: '#1a2213', overlap: '#6fae27' },
-  onLime: { a: '#1a2213', b: '#4c7f1e', overlap: '#fdfbf4' },
+  onLime: { a: '#1a2213', b: '#4c7f1e', overlap: '#33501a' },
 };
 
 // Geometry on a 48×48 grid: stems at x=13 and x=35, bowl radius 11 centered at (24,24).
-// Each stroke runs past the bottom by 35° so the overlap is a short lens, not the whole bowl.
-const LEFT = 'M13 10 V24 A11 11 0 0 0 30.3 33';
-const RIGHT = 'M35 10 V24 A11 11 0 0 1 17.7 33';
+// Each stroke runs just 15° past the bottom, so the overlap is a small lens at the base.
+const LEFT = 'M13 10 V24 A11 11 0 0 0 26.85 34.63';
+const RIGHT = 'M35 10 V24 A11 11 0 0 1 21.15 34.63';
 const STROKE = 8;
 
 interface JumiMarkProps {

@@ -9,7 +9,7 @@ export const CANDIDATES: CandidateProfile[] = [
     name: 'Maria Santos',
     headline: 'BS IT graduate · frontend-leaning',
     education: 'BS Information Technology, 2026',
-    avatarHue: 95,
+    avatarHue: 50,
     skills: [
       { name: 'React', proficiency: 2 },
       { name: 'HTML/CSS', proficiency: 3 },

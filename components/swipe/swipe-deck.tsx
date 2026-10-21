@@ -18,6 +18,8 @@ interface SwipeDeckProps<T extends DeckItem> {
   onDecide: (item: T, decision: SwipeDecision) => 'ok' | 'limit';
   onOpen: (item: T) => void;
   empty: React.ReactNode;
+  /** Vertical space (px) used by the page around the deck; the deck fills the rest of the viewport. */
+  reserve?: number;
 }
 
 type Drag = { x: number; y: number; active: boolean };
@@ -29,7 +31,14 @@ function exitTransform(decision: SwipeDecision, from: { x: number; y: number }) 
   return `translate(${dir * 150}%, ${from.y}px) rotate(${dir * 22}deg)`;
 }
 
-export function SwipeDeck<T extends DeckItem>({ items, renderCard, onDecide, onOpen, empty }: SwipeDeckProps<T>) {
+export function SwipeDeck<T extends DeckItem>({
+  items,
+  renderCard,
+  onDecide,
+  onOpen,
+  empty,
+  reserve = 290,
+}: SwipeDeckProps<T>) {
   const [drag, setDrag] = useState<Drag>({ x: 0, y: 0, active: false });
   const [leaving, setLeaving] = useState<Leaving<T> | null>(null);
   const [exiting, setExiting] = useState(false);
@@ -54,8 +63,9 @@ export function SwipeDeck<T extends DeckItem>({ items, renderCard, onDecide, onO
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const el = e.target as HTMLElement | null;
-      if (el?.closest('input, textarea, select, dialog[open]')) return;
+      // Don't hijack arrows while typing or while a sheet/dialog is open.
+      if (e.target instanceof Element && e.target.closest('input, textarea, select, dialog[open]')) return;
+      if (document.querySelector('dialog[open], [role=dialog]')) return;
       if (e.key === 'ArrowLeft') decide('pass');
       else if (e.key === 'ArrowRight') decide('like');
       else if (e.key === 'ArrowUp') {
@@ -99,8 +109,9 @@ export function SwipeDeck<T extends DeckItem>({ items, renderCard, onDecide, onO
   const hint = drag.y < -40 && Math.abs(drag.y) > Math.abs(drag.x) ? 'super' : drag.x > 40 ? 'like' : drag.x < -40 ? 'pass' : null;
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="relative h-[min(560px,calc(100dvh-260px))] min-h-[440px]" aria-live="polite">
+    <div className="flex flex-col gap-4">
+      {/* Height tracks the viewport so the action buttons stay visible on short laptop screens too. */}
+      <div className="relative" style={{ height: `clamp(390px, calc(100dvh - ${reserve}px), 560px)` }} aria-live="polite">
         {!top && !leaving && <div className="absolute inset-0">{empty}</div>}
 
         {next && (

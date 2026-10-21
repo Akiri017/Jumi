@@ -37,7 +37,7 @@ export function MatchMoment() {
       role="dialog"
       aria-modal="true"
       aria-labelledby="match-title"
-      className="fixed inset-0 z-50 grid animate-fade-in place-items-center bg-forest/95 p-6 text-cream"
+      className="fixed inset-0 z-50 grid animate-fade-in place-items-center overflow-y-auto bg-forest p-6 text-cream"
       onKeyDown={(e) => e.key === 'Escape' && dismissCelebration()}
     >
       <div className="w-full max-w-sm text-center">

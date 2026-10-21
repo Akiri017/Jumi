@@ -1,4 +1,4 @@
-﻿// Seeded catalog + localStorage-backed state. Safe to call on the server (falls back to seed).
+// Seeded catalog + localStorage-backed state. Safe to call on the server (falls back to seed).
 
 import type { AppState, Catalog, JumiRepository } from './repository';
 import { CANDIDATES } from './seed/candidates';

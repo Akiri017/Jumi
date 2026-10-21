@@ -28,7 +28,8 @@ type Action =
   | { type: 'replace'; state: AppState }
   | { type: 'setPersona'; persona: Role }
   | { type: 'onboard'; persona: Role }
-  | { type: 'swipe'; side: Role; candidateId: string; vacancyId: string; decision: SwipeDecision }
+  // `simulated` swipes come from the demo's stand-in counterpart and don't use up anyone's allowance.
+  | { type: 'swipe'; side: Role; candidateId: string; vacancyId: string; decision: SwipeDecision; simulated?: boolean }
   | { type: 'match'; candidateId: string; vacancyId: string }
   | { type: 'message'; message: Message }
   | { type: 'addSwipes'; persona: Role; amount: number };
@@ -53,6 +54,7 @@ function reducer(state: AppState, action: Action): AppState {
         (s) => !(s.side === side && s.candidateId === candidateId && s.vacancyId === vacancyId),
       );
       swipes.push({ side, candidateId, vacancyId, decision, at: Date.now() });
+      if (action.simulated) return { ...state, swipes };
       return {
         ...state,
         swipes,
@@ -171,7 +173,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       const candidate = candidateById.get(candidateId);
       if (vacancy && candidate && wouldSwipeBack(side, vacancy, candidate)) {
         later(() => {
-          dispatch({ type: 'swipe', side: other, candidateId, vacancyId, decision: 'like' });
+          dispatch({ type: 'swipe', side: other, candidateId, vacancyId, decision: 'like', simulated: true });
           createMatch(candidateId, vacancyId);
         }, SWIPE_BACK_DELAY_MS);
       }
@@ -188,7 +190,7 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
       .reverse()
       .find((s) => s.side === side && s.decision !== 'pass' && !matched.has(matchId(s.candidateId, s.vacancyId)));
     if (!lastLike) return false;
-    dispatch({ type: 'swipe', side: counterpart(side), candidateId: lastLike.candidateId, vacancyId: lastLike.vacancyId, decision: 'like' });
+    dispatch({ type: 'swipe', side: counterpart(side), candidateId: lastLike.candidateId, vacancyId: lastLike.vacancyId, decision: 'like', simulated: true });
     createMatch(lastLike.candidateId, lastLike.vacancyId);
     return true;
   }, [createMatch]);

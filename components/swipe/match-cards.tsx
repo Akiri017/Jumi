@@ -17,9 +17,9 @@ function MatchBadge({ result }: { result: MatchResult }) {
   );
 }
 
-function Fact({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+function Fact({ icon, children, className = '' }: { icon: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <li className="flex items-center gap-2 text-sm text-ink">
+    <li className={`flex items-center gap-2 text-sm text-ink ${className}`}>
       <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-cream text-moss">{icon}</span>
       <span className="font-medium">{children}</span>
     </li>
@@ -58,7 +58,7 @@ export function VacancyCard({
     profile.skills.some((s) => s.name === skill) || profile.evidence.some((e) => e.skills.includes(skill));
   return (
     <article className={CARD}>
-      <header className="relative bg-forest px-5 pt-5 pb-6 text-cream">
+      <header className="relative bg-forest px-5 pt-5 pb-5 text-cream short:pt-4 short:pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <Avatar name={company.name} hue={company.hue} size={52} shape="square" />
@@ -71,19 +71,19 @@ export function VacancyCard({
           </div>
           <MatchBadge result={result} />
         </div>
-        <h2 className="mt-4 font-display text-[28px] leading-[1.05] font-extrabold">{vacancy.title}</h2>
+        <h2 className="mt-4 font-display text-[28px] short:mt-3 short:text-2xl leading-[1.05] font-extrabold">{vacancy.title}</h2>
       </header>
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-5 short:gap-3 short:p-4">
         <ul className="grid grid-cols-2 gap-2">
           <Fact icon={<IconPeso className="size-4" />}>
             {formatPeso(vacancy.salary.value.min)}–{formatPeso(vacancy.salary.value.max)}/mo
           </Fact>
           <Fact icon={<IconPin className="size-4" />}>{vacancy.location.value.city}</Fact>
           <Fact icon={<IconBuilding className="size-4" />}>{workSetupLabel(vacancy.workSetup.value)}</Fact>
-          <Fact icon={<IconSpark className="size-4" />}>{vacancy.level}</Fact>
+          <Fact icon={<IconSpark className="size-4" />} className="short:hidden">{vacancy.level}</Fact>
         </ul>
         <div>
-          <p className="mb-2 text-xs font-semibold text-ink-muted">
+          <p className="mb-2 text-xs font-semibold text-ink-muted short:hidden">
             Skills: <span className="text-ink">dark = required</span>, outlined = preferred
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -105,22 +105,22 @@ export function CandidateCard({ profile, result }: { profile: CandidateProfile; 
   const { salary, locations, workSetups } = profile.preferences;
   return (
     <article className={CARD}>
-      <header className="bg-forest px-5 pt-5 pb-6 text-cream">
+      <header className="bg-forest px-5 pt-5 pb-5 text-cream short:pt-4 short:pb-4">
         <div className="flex items-start justify-between gap-3">
           <Avatar name={profile.name} hue={profile.avatarHue} size={64} />
           <MatchBadge result={result} />
         </div>
-        <h2 className="mt-4 font-display text-[28px] leading-[1.05] font-extrabold">{profile.name}</h2>
+        <h2 className="mt-4 font-display text-[28px] short:mt-3 short:text-2xl leading-[1.05] font-extrabold">{profile.name}</h2>
         <p className="mt-1 text-sm text-cream/80">{profile.headline}</p>
       </header>
-      <div className="flex flex-1 flex-col gap-4 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-5 short:gap-3 short:p-4">
         <ul className="grid grid-cols-2 gap-2">
           <Fact icon={<IconPeso className="size-4" />}>
             Asks {formatPeso(salary.value.min)}–{formatPeso(salary.value.max)}
           </Fact>
           <Fact icon={<IconPin className="size-4" />}>{locations.value.map((l) => l.city).join(' / ')}</Fact>
           <Fact icon={<IconBuilding className="size-4" />}>Wants {workSetups.value.map(workSetupLabel).join(' or ')}</Fact>
-          <Fact icon={<IconSpark className="size-4" />}>{profile.education.split(',')[0]}</Fact>
+          <Fact icon={<IconSpark className="size-4" />} className="short:hidden">{profile.education.split(',')[0]}</Fact>
         </ul>
         <div className="flex flex-wrap gap-1.5">
           {profile.skills.map((s) => (

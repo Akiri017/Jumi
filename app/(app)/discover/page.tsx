@@ -85,6 +85,7 @@ function Discover() {
       items={items}
       onDecide={onDecide}
       onOpen={onOpen}
+      reserve={employer ? 340 : 290}
       renderCard={(item) => {
         if (employer) return <CandidateCard profile={item.candidate} result={item.result} />;
         const company = getCompany(item.vacancy.companyId);
