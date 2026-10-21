@@ -49,10 +49,9 @@ interface MatchExplanationProps {
   result: MatchResult;
   viewer: 'candidate' | 'employer';
   heading: React.ReactNode;
-  compact?: boolean;
 }
 
-export function MatchExplanation({ result, viewer, heading, compact = false }: MatchExplanationProps) {
+export function MatchExplanation({ result, viewer, heading }: MatchExplanationProps) {
   // Show what to look at first: essential gaps, then other differences, then what's met.
   const order = (f: FactorResult) =>
     (f.status === 'gap' ? 0 : f.status === 'partial' ? 1 : 2) + (f.priority === 'essential' ? 0 : 0.5);
@@ -63,9 +62,9 @@ export function MatchExplanation({ result, viewer, heading, compact = false }: M
       <section className="rounded-3xl bg-forest p-5 text-cream">
         {heading}
         <div className="mt-4 flex items-center gap-5">
-          <ScoreRing score={result.overall} size={compact ? 104 : 124} flagged={result.hasEssentialGap} label={fitLabel(result)} />
+          <ScoreRing score={result.overall} size={112} flagged={result.hasEssentialGap} label={fitLabel(result)} />
           <div className="flex-1">
-            <p className="font-display text-xl leading-snug font-bold">{result.summary}</p>
+            <p className="font-display text-lg leading-snug font-bold">{result.summary}</p>
           </div>
         </div>
         <div className="mt-4 flex flex-wrap gap-2 text-sm">

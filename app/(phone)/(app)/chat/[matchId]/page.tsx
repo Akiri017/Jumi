@@ -114,7 +114,7 @@ export default function ChatPage() {
       )}
 
       <form
-        className="fixed inset-x-0 bottom-16 z-20 border-t border-line bg-cream/95 px-4 py-3 backdrop-blur"
+        className="fixed inset-x-0 bottom-16 z-20 border-t sm:bottom-[76px] border-line bg-cream/95 px-4 py-3 backdrop-blur"
         onSubmit={(e) => {
           e.preventDefault();
           send(draft);

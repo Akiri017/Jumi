@@ -18,6 +18,16 @@ npm run lint
 
 Requires Node 20+. Fonts load from Google Fonts at runtime. Offline, the app falls back to system fonts and still works.
 
+## Phone interface
+
+On a laptop or desktop, every screen renders inside a phone (390×844, with a 9:41 status bar, Dynamic Island and
+home indicator) on a forest backdrop, like the pitch deck mockups. The phone scales down to fit shorter screens.
+On an actual phone the frame disappears and Jumi fills the screen like a native app. `/brand` stays a normal page.
+
+How it works (`components/layout/phone-frame.tsx`): the screen area has a CSS transform, which makes it the
+containing block for `position: fixed` elements, so the tab bar, sheets and the match overlay pin to the phone
+rather than the browser window. Screens size themselves with `var(--app-h)` instead of `100dvh`.
+
 ## 3-minute demo script
 
 1. **Onboard as Maria** (`/onboarding`): choose *Jobseeker*, review the prefilled profile (note the
@@ -31,7 +41,7 @@ Requires Node 20+. Fonts load from Google Fonts at runtime. Offline, the app fal
    chat opens with a mocked reply.
 5. Optional contrast: the next card (Junior QA Engineer) shows **59% · Essential gap**. It's flagged and capped, never hidden.
 6. **Demo → Northwind Digital**: the vacancy dashboard shows strong fits, gaps and matches per role. **Review candidates**
-   brings up Mark (95%) with a live explanation beside the deck on desktop. Open **Matches → Maria** and tap
+   brings up Mark (95%); tap his card for the explanation. Open **Matches → Maria** and tap
    *why we matched* to see **the same match from the employer side**, scored with the employer's essentials.
 
 Reset at any time with **Demo → Reset demo data**. Keyboard: ← pass · ↑ super interest · → interested · Enter opens details.

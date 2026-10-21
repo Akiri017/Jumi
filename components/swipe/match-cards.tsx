@@ -73,7 +73,7 @@ export function VacancyCard({
         </div>
         <h2 className="mt-4 font-display text-[28px] short:mt-3 short:text-2xl leading-[1.05] font-extrabold">{vacancy.title}</h2>
       </header>
-      <div className="flex flex-1 flex-col gap-4 p-5 short:gap-3 short:p-4">
+      <div className="flex flex-1 flex-col gap-3 p-4">
         <ul className="grid grid-cols-2 gap-2">
           <Fact icon={<IconPeso className="size-4" />}>
             {formatPeso(vacancy.salary.value.min)}–{formatPeso(vacancy.salary.value.max)}/mo
@@ -113,14 +113,17 @@ export function CandidateCard({ profile, result }: { profile: CandidateProfile; 
         <h2 className="mt-4 font-display text-[28px] short:mt-3 short:text-2xl leading-[1.05] font-extrabold">{profile.name}</h2>
         <p className="mt-1 text-sm text-cream/80">{profile.headline}</p>
       </header>
-      <div className="flex flex-1 flex-col gap-4 p-5 short:gap-3 short:p-4">
+      <div className="flex flex-1 flex-col gap-3 p-4">
         <ul className="grid grid-cols-2 gap-2">
           <Fact icon={<IconPeso className="size-4" />}>
             Asks {formatPeso(salary.value.min)}–{formatPeso(salary.value.max)}
           </Fact>
-          <Fact icon={<IconPin className="size-4" />}>{locations.value.map((l) => l.city).join(' / ')}</Fact>
-          <Fact icon={<IconBuilding className="size-4" />}>Wants {workSetups.value.map(workSetupLabel).join(' or ')}</Fact>
-          <Fact icon={<IconSpark className="size-4" />} className="short:hidden">{profile.education.split(',')[0]}</Fact>
+          {/* First city + count keeps the card one line per fact; the full list is on the Why screen. */}
+          <Fact icon={<IconPin className="size-4" />}>
+            {locations.value[0]?.city ?? 'Anywhere'}
+            {locations.value.length > 1 && <span className="text-ink-muted"> +{locations.value.length - 1}</span>}
+          </Fact>
+          <Fact icon={<IconBuilding className="size-4" />}>{workSetups.value.map(workSetupLabel).join(' / ')}</Fact>
         </ul>
         <div className="flex flex-wrap gap-1.5">
           {profile.skills.map((s) => (

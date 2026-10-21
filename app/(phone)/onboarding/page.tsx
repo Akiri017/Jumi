@@ -26,7 +26,7 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col bg-forest text-cream">
+    <div className="flex min-h-[var(--app-h)] flex-col bg-forest text-cream">
       <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-5 pt-6 pb-8">
         <div className="flex h-11 items-center justify-between">
           {step > 0 ? (

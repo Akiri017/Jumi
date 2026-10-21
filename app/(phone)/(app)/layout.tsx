@@ -5,7 +5,7 @@ import { AppShell } from '@/components/layout/app-shell';
 // so it streams in behind Suspense instead of blocking prerender.
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Suspense fallback={<div className="min-h-dvh bg-cream" aria-busy="true" />}>
+    <Suspense fallback={<div className="min-h-[var(--app-h)] bg-cream" aria-busy="true" />}>
       <AppShell>{children}</AppShell>
     </Suspense>
   );

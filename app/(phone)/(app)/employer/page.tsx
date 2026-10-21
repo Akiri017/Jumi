@@ -23,7 +23,7 @@ export default function EmployerDashboard() {
       <h1 className="font-display text-2xl font-extrabold">{company.name}</h1>
       <p className="text-sm text-ink-muted">Your vacancies and how the recommended talent pool fits them.</p>
 
-      <ul className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-5 grid gap-4">
         {employerVacancies().map((v) => {
           const results = allCandidates.map((c) => scoreForEmployer(c, v));
           const strong = results.filter((r) => r.overall >= 80).length;

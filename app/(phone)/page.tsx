@@ -17,7 +17,7 @@ export default function Home() {
   }, [hydrated, state.onboarded, state.persona, router]);
 
   return (
-    <div className="grid min-h-dvh place-items-center bg-forest" aria-busy="true">
+    <div className="grid min-h-[var(--app-h)] place-items-center bg-forest" aria-busy="true">
       <JumiMark size={64} title="Loading Jumi" />
     </div>
   );

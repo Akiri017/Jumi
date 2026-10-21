@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
 import { UpgradeSheet } from '@/components/demo/upgrade-sheet';
-import { MatchExplanation } from '@/components/match/match-explanation';
 import { CandidateCard, VacancyCard } from '@/components/swipe/match-cards';
 import { SwipeDeck, type DeckItem } from '@/components/swipe/swipe-deck';
 import { scoreForCandidate, scoreForEmployer } from '@/lib/matching/score';
@@ -85,7 +84,7 @@ function Discover() {
       items={items}
       onDecide={onDecide}
       onOpen={onOpen}
-      reserve={employer ? 340 : 290}
+      reserve={employer ? 354 : 314}
       renderCard={(item) => {
         if (employer) return <CandidateCard profile={item.candidate} result={item.result} />;
         const company = getCompany(item.vacancy.companyId);
@@ -115,7 +114,7 @@ function Discover() {
       <div className="mb-4">
         <h1 className="font-display text-2xl font-extrabold">{employer ? 'Recommended candidates' : 'Recommended for you'}</h1>
         {employer ? (
-          <div className="mt-3 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Vacancy">
+          <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" role="tablist" aria-label="Vacancy">
             {ownVacancies.map((v) => (
               <Link
                 key={v.id}
@@ -135,29 +134,7 @@ function Discover() {
         )}
       </div>
 
-      {employer ? (
-        // Desktop: deck on the left, live explanation for the top card on the right.
-        <div className="grid gap-6 lg:grid-cols-[400px_1fr]">
-          <div>{deck}</div>
-          <aside className="hidden lg:block" aria-label="Why the top candidate fits">
-            {items[0] ? (
-              <MatchExplanation
-                compact
-                viewer="employer"
-                result={items[0].result}
-                heading={
-                  <p className="text-sm text-cream/80">
-                    Why <strong className="text-cream">{items[0].candidate.name}</strong> for{' '}
-                    <strong className="text-cream">{selectedVacancy.title}</strong>
-                  </p>
-                }
-              />
-            ) : null}
-          </aside>
-        </div>
-      ) : (
-        deck
-      )}
+      {deck}
       <UpgradeSheet open={upgradeOpen} onClose={() => setUpgradeOpen(false)} />
     </>
   );

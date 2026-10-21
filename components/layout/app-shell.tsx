@@ -33,11 +33,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     if (hydrated && !state.onboarded) router.replace('/onboarding');
   }, [hydrated, state.onboarded, router]);
 
-  // Jobseekers get a phone-width column; employers get room for a side-by-side view on desktop.
-  const width = employer ? 'max-w-5xl' : 'max-w-md';
+  // Screens scroll inside the phone frame's own container, not the window, so reset it per route.
+  useEffect(() => {
+    document.getElementById('app-scroll')?.scrollTo(0, 0);
+  }, [pathname]);
+
+  // Both personas use the phone layout; the cap only matters on real tablets with no frame.
+  const width = 'max-w-md';
 
   return (
-    <div className="flex min-h-dvh flex-col">
+    <div className="flex min-h-[var(--app-h)] flex-col">
       <header className="sticky top-0 z-30 bg-forest text-cream">
         <div className={`mx-auto flex h-14 w-full items-center justify-between gap-3 px-4 ${width}`}>
           <Link href={employer ? '/employer' : '/discover'} aria-label="Jumi home">
@@ -61,7 +66,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         {hydrated && state.onboarded ? children : <ShellSkeleton />}
       </main>
 
-      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 backdrop-blur">
+      <nav aria-label="Main" className="phone-safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-line bg-paper/95 backdrop-blur">
         <ul className={`mx-auto flex w-full justify-around px-2 ${width}`}>
           {tabs.map(({ href, label, Icon }) => {
             const active = pathname === href || (href !== '/discover' && pathname.startsWith(href));

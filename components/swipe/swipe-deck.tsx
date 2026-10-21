@@ -37,7 +37,7 @@ export function SwipeDeck<T extends DeckItem>({
   onDecide,
   onOpen,
   empty,
-  reserve = 290,
+  reserve = 314,
 }: SwipeDeckProps<T>) {
   const [drag, setDrag] = useState<Drag>({ x: 0, y: 0, active: false });
   const [leaving, setLeaving] = useState<Leaving<T> | null>(null);
@@ -111,7 +111,7 @@ export function SwipeDeck<T extends DeckItem>({
   return (
     <div className="flex flex-col gap-4">
       {/* Height tracks the viewport so the action buttons stay visible on short laptop screens too. */}
-      <div className="relative" style={{ height: `clamp(390px, calc(100dvh - ${reserve}px), 560px)` }} aria-live="polite">
+      <div className="relative" style={{ height: `clamp(390px, calc(var(--app-h) - ${reserve}px), 560px)` }} aria-live="polite">
         {!top && !leaving && <div className="absolute inset-0">{empty}</div>}
 
         {next && (
@@ -185,9 +185,6 @@ export function SwipeDeck<T extends DeckItem>({
           <IconHeart className="size-8" />
         </ActionButton>
       </div>
-      <p className="hidden text-center text-xs text-ink-muted sm:block">
-        Keyboard: ← pass · ↑ super interest · → interested · tap a card for details
-      </p>
     </div>
   );
 }
