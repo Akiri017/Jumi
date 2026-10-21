@@ -110,7 +110,7 @@ export interface MatchResult {
 }
 
 export interface Swipe {
-  actorId: string; // candidate id or company id
+  side: Role; // who swiped: the jobseeker or the employer on this pair
   candidateId: string;
   vacancyId: string;
   decision: SwipeDecision;
